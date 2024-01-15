@@ -8,36 +8,118 @@
           >CODESHARE</span
         >
       </h1>
-      <button
-        class="border-l border-white/10 h-10 px-4 text-sm hover:bg-gray-950"
+      <div
+        class="border-l divide-x divide-white/10 border-white/10 flex items-center"
       >
-        Publish
-      </button>
+        <button class="border-white/10 h-9 px-4 text-sm hover:bg-gray-950">
+          Download
+        </button>
+        <button class="border-white/10 h-9 px-4 text-sm hover:bg-gray-950">
+          Copy
+        </button>
+        <button class="border-white/10 h-9 px-4 text-sm hover:bg-gray-950">
+          Fork
+        </button>
+        <button class="border-white/10 h-9 px-4 text-sm hover:bg-gray-950">
+          Publish
+        </button>
+      </div>
     </header>
-    <vue-monaco-editor
-      v-model:value="code"
-      theme="vs-dark"
-      :options="MONACO_EDITOR_OPTIONS"
-      :language="selectedLanguage"
-      @mount="handleMount"
-      :minimap="false"
-      class="flex-1"
+    <div class="flex-1 flex">
+      <aside
+        class="aside sticky top-0 border-r border-white/10 w-12 flex flex-col items-center py-0.5 z-[50]"
+      >
+        <UTooltip
+          text="New code bin"
+          :shortcuts="['CTRL', 'N']"
+          :popper="{ placement: 'right' }"
+        >
+          <UButton
+            icon="i-lucide-file-code-2"
+            square
+            variant="ghost"
+            color="gray"
+            size="lg"
+            class="flex items-center justify-center"
+          />
+        </UTooltip>
+        <UTooltip
+          text="New diff editor"
+          :shortcuts="['CTRL', 'D']"
+          :popper="{ placement: 'right' }"
+        >
+          <UButton
+            icon="i-lucide-file-diff"
+            square
+            variant="ghost"
+            color="gray"
+            size="lg"
+            class="flex items-center justify-center"
+          />
+        </UTooltip>
+      </aside>
+      <ClientOnly>
+        <vue-monaco-editor
+          v-model:value="code"
+          theme="vs-dark"
+          :options="MONACO_EDITOR_OPTIONS"
+          :language="selectedLanguage"
+          @mount="handleMount"
+          class="flex-1"
+        >
+          <template #default>
+            <div class="flex items-center justify-center">
+              <div class="text-gray-500">Loading editor...</div>
+            </div>
+          </template>
+        </vue-monaco-editor>
+      </ClientOnly>
+    </div>
+    <footer
+      class="border-t bg-gray-900 border-white/10 flex items-center justify-between"
     >
-      <template #default>
-        <div class="flex-1 flex items-center justify-center">
-          <div class="text-gray-500">Loading...</div>
+      <div
+        class="flex items-center divide-x divide-white/10 text-xs [&>div]:p-2 border-r border-white/10"
+      >
+        <div>
+          <span class="font-semibold">{{ wordCount }}</span>
+          <span class="text-gray-300"> words</span>
         </div>
-      </template>
-    </vue-monaco-editor>
-    <footer class="border-t bg-gray-900 border-white/10">
-      <USelectMenu
-        v-model="selectedLanguage"
-        :options="languages"
-        class="w-40 border-r border-white/10"
-        searchable
-        searchable-placeholder="Search a language..."
-        :ui="{ ring: 'ring-0', rounded: '' }"
-      />
+        <div>
+          <span class="font-semibold">{{ letterCount }}</span>
+          <span class="text-gray-300"> letters</span>
+        </div>
+        <div>
+          <span class="font-semibold">{{ lineCount }}</span>
+          <span class="text-gray-300"> lines</span>
+        </div>
+      </div>
+      <div
+        class="flex items-center divide-x divide-white/10 text-xs border-l border-white/10"
+      >
+        <UTooltip
+          text="Format code"
+          :shortcuts="['CTRL', 'F']"
+          :popper="{ placement: 'top' }"
+        >
+          <button
+            class="p-2 hover:bg-gray-950"
+            @click="formatCode"
+            :disabled="!editorRef"
+          >
+            <Icon name="i-lucide-sparkles" class="h-4 w-4" />
+          </button>
+        </UTooltip>
+        <USelectMenu
+          v-model="selectedLanguage"
+          :options="languages"
+          class="w-48"
+          searchable
+          id="language-select"
+          searchable-placeholder="Search a language..."
+          :ui="{ ring: '!ring-0', rounded: '' }"
+        />
+      </div>
     </footer>
   </main>
 </template>
@@ -47,14 +129,20 @@ import githubTheme from "@/assets/github-dark.json";
 import languages from "@/assets/languages";
 const MONACO_EDITOR_OPTIONS = {
   automaticLayout: true,
-  formatOnType: true,
   formatOnPaste: true,
+  foldingHighlight: true,
   autoClosingQuotes: "always",
   autoClosingBrackets: "always",
   autoIndent: true,
   autoSurround: "languageDefined",
+  scrollBeyondLastLine: false,
+  fontLigatures: true,
+  fontFamily: 'Cascadia Code',
   minimap: {
     enabled: false,
+  },
+  stickyScroll: {
+    enabled: true,
   },
 };
 
@@ -146,8 +234,28 @@ const handleMount = (editor, monaco) => {
   monaco.editor.setTheme("github-dark");
 };
 
-// your action
+const wordCount = computed(() => {
+  const text = code.value;
+  const words = text.match(/\w+/g);
+  return words ? words.length : 0;
+});
+
+const letterCount = computed(() => {
+  const text = code.value;
+  return text.length;
+});
+
+const lineCount = computed(() => {
+  return editorRef.value?.getModel()?.getLineCount() || 0;
+});
+
 function formatCode() {
   editorRef.value?.getAction("editor.action.formatDocument").run();
 }
 </script>
+
+<style>
+#language-select {
+  @apply ring-0 !important;
+}
+</style>
