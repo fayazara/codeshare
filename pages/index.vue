@@ -1,77 +1,19 @@
 <template>
   <main class="h-screen flex flex-col text-white">
-    <header
-      class="border-b bg-gray-900 border-white/10 flex items-center justify-between gap-3"
-    >
-      <h1 class="font-bold tracking-wide flex items-center gap-2 px-4">
-        <Icon class="h-5 w-5" name="i-lucide-chevron-right-square" /><span
-          >CODESHARE</span
-        >
-      </h1>
-      <div
-        class="border-l divide-x divide-white/10 border-white/10 flex items-center"
-      >
-        <UTooltip text="Download file">
-          <button class="border-white/10 h-9 px-3 text-sm hover:bg-gray-950">
-            <Icon name="i-lucide-download" class="h-4 w-4" />
-          </button>
-        </UTooltip>
-        <UTooltip text="Copy code">
-          <button class="border-white/10 h-9 px-3 text-sm hover:bg-gray-950">
-            <Icon name="i-lucide-copy" class="h-4 w-4" />
-          </button>
-        </UTooltip>
-        <UTooltip text="Fork">
-          <button class="border-white/10 h-9 px-3 text-sm hover:bg-gray-950">
-            <Icon name="i-lucide-git-fork" class="h-4 w-4" />
-          </button>
-        </UTooltip>
-        <UTooltip text="Publish">
-          <button class="border-white/10 h-9 px-3 text-sm hover:bg-gray-950">
-            <Icon name="i-lucide-send" class="h-4 w-4" />
-          </button>
-        </UTooltip>
-      </div>
-    </header>
+    <AppNavbar
+      @publish="publishSnippet"
+      @copy="copySnippet"
+      @download="downloadSnippet"
+      @fork="forkSnippet"
+    />
     <div class="flex-1 flex">
-      <aside
-        class="aside sticky top-0 border-r border-white/10 w-12 flex flex-col items-center py-0.5 z-[50]"
-      >
-        <UTooltip
-          text="New code bin"
-          :shortcuts="['CTRL', 'N']"
-          :popper="{ placement: 'right' }"
-        >
-          <UButton
-            icon="i-lucide-file-code-2"
-            square
-            variant="ghost"
-            color="gray"
-            size="lg"
-            class="flex items-center justify-center"
-          />
-        </UTooltip>
-        <UTooltip
-          text="New diff editor"
-          :shortcuts="['CTRL', 'D']"
-          :popper="{ placement: 'right' }"
-        >
-          <UButton
-            icon="i-lucide-file-diff"
-            square
-            variant="ghost"
-            color="gray"
-            size="lg"
-            class="flex items-center justify-center"
-          />
-        </UTooltip>
-      </aside>
+      <AppSidebar />
       <ClientOnly>
         <vue-monaco-editor
-          v-model:value="code"
+          v-model:value="snippet.body"
           theme="vs-dark"
           :options="MONACO_EDITOR_OPTIONS"
-          :language="selectedLanguage"
+          :language="snippet.language"
           @mount="handleMount"
           class="flex-1"
           @change="onChange"
@@ -135,7 +77,7 @@
           </button>
         </UTooltip>
         <USelectMenu
-          v-model="selectedLanguage"
+          v-model="snippet.language"
           :options="languages"
           class="w-48"
           searchable
@@ -145,24 +87,62 @@
         />
       </div>
     </footer>
+    <UModal v-model="confirmationModal">
+      <div class="p-4 space-y-4">
+        <p>Publish code</p>
+        <UFormGroup label="Email">
+          <UInput size="lg" placeholder="File name" v-model="snippet.title" />
+        </UFormGroup>
+        <UAlert
+          icon="i-heroicons-exclamation-triangle"
+          title="Heads up!"
+          description="This snippet will be public and anyone will be able to see it. Make sure you don't include any sensitive information."
+        />
+        <UButton size="lg" block color="black">Publish</UButton>
+      </div>
+    </UModal>
   </main>
 </template>
 
 <script setup>
 const {
   MONACO_EDITOR_OPTIONS,
-  selectedLanguage,
   languages,
-  code,
   lineCount,
   wordCount,
   letterCount,
   editorRef,
   toggleMinimap,
+  snippet,
   handleMount,
   onChange,
   formatCode,
 } = useEditor();
+
+const confirmationModal = ref(false);
+
+const publishSnippet = async () => {
+  if (!snippet.value.body) {
+    return;
+  }
+  confirmationModal.value = true;
+  // const data = await $fetch("/api/codebin", {
+  //   method: "POST",
+  //   body: snippet.value,
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  // });
+};
+const copySnippet = () => {
+  console.log("copySnippet");
+};
+const downloadSnippet = () => {
+  console.log("downloadSnippet");
+};
+const forkSnippet = () => {
+  console.log("forkSnippet");
+};
 </script>
 
 <style>
