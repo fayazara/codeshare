@@ -120,6 +120,17 @@ const {
 } = useEditor();
 const route = useRoute();
 const { data: snippet } = await useFetch(`/api/codebin/${route.params.id}`);
+
+useHead({
+  title: `${snippet.title} - Codeshare.app`,
+  meta: [
+    {
+      hid: "description",
+      name: "description",
+      content: `Codeshare.app - ${snippet.title}`,
+    },
+  ],
+});
 </script>
 
 <style>

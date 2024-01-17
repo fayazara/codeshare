@@ -119,6 +119,17 @@ const {
   confirmPublish,
   copySnippet,
 } = useEditor();
+
+useHead({
+  title: "Code Snippet - Pastebin for developers",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Code Snippet allows you to share code with other developers. Create and share code snippets without signing up.",
+    },
+  ],
+});
 </script>
 
 <style>
