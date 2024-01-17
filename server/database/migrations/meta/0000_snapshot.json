@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "8c3c4cfc-1f32-4e73-80ff-24387d54a9f8",
+  "id": "9be7329b-d484-4d05-a2bc-28f7b82d7cfc",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "snippets": {
@@ -23,6 +23,13 @@
         },
         "body": {
           "name": "body",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "uid": {
+          "name": "uid",
           "type": "text",
           "primaryKey": false,
           "notNull": true,

@@ -4,6 +4,7 @@ export const snippets = sqliteTable("snippets", {
   id: integer("id").primaryKey(),
   title: text("title").notNull(),
   body: text("body").notNull(),
+  uid: text("uid").notNull(),
   language: text("language").default("plaintext").notNull(),
   createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
 });

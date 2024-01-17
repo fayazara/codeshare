@@ -17,13 +17,11 @@
         </button>
       </UTooltip>
       <UTooltip text="Copy code">
-        <button class="border-white/10 h-9 px-3 text-sm hover:bg-gray-950">
+        <button
+          @click="$emit('copy')"
+          class="border-white/10 h-9 px-3 text-sm hover:bg-gray-950"
+        >
           <Icon name="i-lucide-copy" class="h-4 w-4" />
-        </button>
-      </UTooltip>
-      <UTooltip text="Fork">
-        <button class="border-white/10 h-9 px-3 text-sm hover:bg-gray-950">
-          <Icon name="i-lucide-git-fork" class="h-4 w-4" />
         </button>
       </UTooltip>
       <UTooltip text="Publish">

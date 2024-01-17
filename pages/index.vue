@@ -1,11 +1,6 @@
 <template>
   <main class="h-screen flex flex-col text-white">
-    <AppNavbar
-      @publish="publishSnippet"
-      @copy="copySnippet"
-      @download="downloadSnippet"
-      @fork="forkSnippet"
-    />
+    <AppNavbar @publish="publishSnippet" @copy="copySnippet" />
     <div class="flex-1 flex">
       <AppSidebar />
       <ClientOnly>
@@ -98,7 +93,9 @@
           title="Heads up!"
           description="This snippet will be public and anyone will be able to see it. Make sure you don't include any sensitive information."
         />
-        <UButton size="lg" block color="black">Publish</UButton>
+        <UButton @click="confirmPublish" size="lg" block color="black"
+          >Publish</UButton
+        >
       </div>
     </UModal>
   </main>
@@ -112,37 +109,27 @@ const {
   wordCount,
   letterCount,
   editorRef,
-  toggleMinimap,
   snippet,
+  confirmationModal,
+  toggleMinimap,
   handleMount,
   onChange,
   formatCode,
+  publishSnippet,
+  confirmPublish,
+  copySnippet,
 } = useEditor();
 
-const confirmationModal = ref(false);
-
-const publishSnippet = async () => {
-  if (!snippet.value.body) {
-    return;
-  }
-  confirmationModal.value = true;
-  // const data = await $fetch("/api/codebin", {
-  //   method: "POST",
-  //   body: snippet.value,
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  // });
-};
-const copySnippet = () => {
-  console.log("copySnippet");
-};
-const downloadSnippet = () => {
-  console.log("downloadSnippet");
-};
-const forkSnippet = () => {
-  console.log("forkSnippet");
-};
+// await useAsyncData("snippet", () => {
+//   if (route.query.id) {
+//     const data = $fetch(`/api/codebin/${route.query.id}`);
+//     snippet.value.title = data.title;
+//     snippet.value.body = data.body;
+//     snippet.value.language = data.language;
+//   } else {
+//     return null;
+//   }
+// });
 </script>
 
 <style>
