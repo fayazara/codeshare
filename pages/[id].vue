@@ -1,6 +1,10 @@
 <template>
   <main class="h-screen flex flex-col text-white">
-    <AppNavbar @publish="publishSnippet" @copy="copySnippet" />
+    <AppNavbar
+      @publish="publishSnippet"
+      @copy="copySnippet"
+      :publish-enabled="false"
+    />
     <div class="flex-1 flex">
       <AppSidebar />
       <ClientOnly>
@@ -105,11 +109,9 @@
 const {
   MONACO_EDITOR_OPTIONS,
   languages,
-  lineCount,
-  wordCount,
-  letterCount,
   editorRef,
   confirmationModal,
+  lineCount,
   toggleMinimap,
   handleMount,
   onChange,
@@ -121,13 +123,24 @@ const {
 const route = useRoute();
 const { data: snippet } = await useFetch(`/api/codebin/${route.params.id}`);
 
+const wordCount = computed(() => {
+  const text = snippet.value.body;
+  const words = text.match(/\w+/g);
+  return words ? words.length : 0;
+});
+
+const letterCount = computed(() => {
+  const text = snippet.value.body;
+  return text.length;
+});
+
 useHead({
-  title: `${snippet.title} - Codeshare.app`,
+  title: `${snippet.value.title} - Codeshare.app`,
   meta: [
     {
       hid: "description",
       name: "description",
-      content: `Codeshare.app - ${snippet.title}`,
+      content: `Codeshare.app - ${snippet.value.title}`,
     },
   ],
 });

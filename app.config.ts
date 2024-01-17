@@ -12,6 +12,7 @@ export default defineAppConfig({
     button: {
       rounded:
         "rounded-lg transition-transform active:scale-x-[0.98] active:scale-y-[0.99]",
+      default: { loadingIcon: "i-lucide-loader-2" },
     },
     modal: {
       overlay: {

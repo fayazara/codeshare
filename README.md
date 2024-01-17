@@ -1,8 +1,29 @@
-# Nuxt 3 Minimal Starter
+# Codeshare.app
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+[Codeshare.app](https://codeshare.app) A mininal code bin sharing app, I wanted a simple but powerful for devs pastebin so, I created this small tool to share code snippets
 
-## Setup
+## Stack
+
+- Nuxt 3
+- Tailwindcss
+- Nuxt UI
+- Turso Database
+- Monaco editor
+
+## Pending tasks
+
+1. Keyboard shortcuts
+2. Diff editor
+3. Refactor (lot of code repeated, didn't think it through) - make common and reuse components and composables
+4. Sharable diff editor
+
+## ENV Vars
+
+TURSO_DB_TOKEN - Database token
+
+TURSO_DB_URL - Database url
+
+## Local setup
 
 Make sure to install the dependencies:
 
@@ -71,5 +92,3 @@ yarn preview
 # bun
 bun run preview
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

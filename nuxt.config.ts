@@ -7,13 +7,12 @@ export default defineNuxtConfig({
     "@nuxtjs/google-fonts",
     "@nuxtjs/fontaine",
     "@vueuse/nuxt",
-    "@formkit/auto-animate/nuxt"
   ],
   ui: {
     icons: ["heroicons", "lucide"],
   },
   colorMode: {
-    preference: 'dark'
+    preference: "dark",
   },
   googleFonts: {
     display: "swap",

@@ -8,6 +8,7 @@
       :popper="{ placement: 'right' }"
     >
       <UButton
+        to="/"
         icon="i-lucide-file-code-2"
         square
         variant="ghost"

@@ -1,6 +1,6 @@
 <template>
   <main class="h-screen flex flex-col text-white">
-    <AppNavbar @publish="publishSnippet" @copy="copySnippet" />
+    <AppNavbar @publish="publishSnippet" @copy="copySnippet" publishEnabled />
     <div class="flex-1 flex">
       <AppSidebar />
       <ClientOnly>
@@ -93,7 +93,13 @@
           title="Heads up!"
           description="This snippet will be public and anyone will be able to see it. Make sure you don't include any sensitive information."
         />
-        <UButton @click="confirmPublish" size="lg" block color="black"
+        <UButton
+          @click="confirmPublish"
+          size="lg"
+          block
+          color="black"
+          :loading="loading"
+          :disabled="loading"
           >Publish</UButton
         >
       </div>
@@ -111,6 +117,7 @@ const {
   editorRef,
   snippet,
   confirmationModal,
+  loading,
   toggleMinimap,
   handleMount,
   onChange,

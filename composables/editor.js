@@ -126,6 +126,7 @@ export const useEditor = () => {
     letterCount,
     editorRef,
     snippet,
+    loading,
     confirmationModal,
     toggleMinimap,
     handleMount,

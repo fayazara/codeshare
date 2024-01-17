@@ -7,7 +7,12 @@
         >CODESHARE</span
       >
     </h1>
-    <UInput v-model="snippet.title" placeholder="file.txt" size="2xs" />
+    <UInput
+      v-if="publishEnabled"
+      v-model="snippet.title"
+      placeholder="file.txt"
+      size="2xs"
+    />
     <div
       class="border-l divide-x divide-white/10 border-white/10 flex items-center"
     >
@@ -24,7 +29,7 @@
           <Icon name="i-lucide-copy" class="h-4 w-4" />
         </button>
       </UTooltip>
-      <UTooltip text="Publish">
+      <UTooltip v-if="publishEnabled" text="Publish">
         <button
           @click="$emit('publish')"
           class="border-white/10 h-9 px-3 text-sm hover:bg-gray-950"
@@ -37,6 +42,12 @@
 </template>
 
 <script setup>
+defineProps({
+  publishEnabled: {
+    type: Boolean,
+    required: true,
+  },
+});
 const { snippet } = useEditor();
 </script>
 
