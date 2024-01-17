@@ -20,19 +20,22 @@ export const useEditor = () => {
     stickyScroll: {
       enabled: true,
     },
+    inlineSuggest: {
+      enabled: true,
+      showToolbar: 'always'
+    },
   });
   const snippet = useState("snippet", () => {
     return {
       title: "untitled.txt",
       body: "",
-      language: "javascript",
+      language: "plaintext",
     };
   });
-  const route = useRoute();
   const confirmationModal = ref(false);
   const loading = ref(false);
   const toast = useToast();
-  const selectedLanguage = ref("javascript");
+  const selectedLanguage = ref("plaintext");
   const lineCount = ref(0);
   const editorRef = shallowRef();
 
@@ -100,8 +103,8 @@ export const useEditor = () => {
         color: "green",
         icon: "i-heroicons-check-circle",
       });
-      copy(`${window.location.origin}?id=${data.uid}`);
-      navigateTo(`?id=${data.uid}`);
+      copy(`${window.location.origin}/${data.uid}`);
+      navigateTo(`/${data.uid}`);
     } catch (error) {
       toast.add({
         title: "Error",

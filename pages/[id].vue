@@ -109,7 +109,6 @@ const {
   wordCount,
   letterCount,
   editorRef,
-  snippet,
   confirmationModal,
   toggleMinimap,
   handleMount,
@@ -119,6 +118,8 @@ const {
   confirmPublish,
   copySnippet,
 } = useEditor();
+const route = useRoute();
+const { data: snippet } = await useFetch(`/api/codebin/${route.params.id}`);
 </script>
 
 <style>
