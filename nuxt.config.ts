@@ -20,6 +20,17 @@ export default defineNuxtConfig({
   colorMode: {
     preference: "dark",
   },
+  app: {
+    head: {
+      script: [
+        {
+          src: "https://eu.umami.is/script.js",
+          "data-website-id": "2bd6347d-b9b2-4bd7-b846-a7b0a7f24598",
+          async: true,
+        },
+      ],
+    },
+  },
   googleFonts: {
     display: "swap",
     families: {
