@@ -1,6 +1,6 @@
 <template>
   <main class="h-screen flex flex-col text-white">
-    <AppNavbar @publish="publishSnippet" @copy="copySnippet" publishEnabled />
+    <AppNavbar @publish="publishSnippet" @copy="copySnippet" @download="downloadSnippet" publishEnabled />
     <div class="flex-1 flex">
       <AppSidebar />
       <ClientOnly>
@@ -125,6 +125,7 @@ const {
   publishSnippet,
   confirmPublish,
   copySnippet,
+  downloadSnippet
 } = useEditor();
 
 useHead({

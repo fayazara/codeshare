@@ -7,9 +7,15 @@ export default defineNuxtConfig({
     "@nuxtjs/google-fonts",
     "@nuxtjs/fontaine",
     "@vueuse/nuxt",
+    "nuxt-security"
   ],
   ui: {
     icons: ["heroicons", "lucide"],
+  },
+  security: {
+    headers: {
+      crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
+    },
   },
   colorMode: {
     preference: "dark",

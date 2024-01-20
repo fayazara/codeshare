@@ -3,7 +3,9 @@
     <AppNavbar
       @publish="publishSnippet"
       @copy="copySnippet"
+      @download="downloadSnippet"
       :publish-enabled="false"
+      :title="snippet.title"
     />
     <div class="flex-1 flex">
       <AppSidebar />
@@ -119,6 +121,7 @@ const {
   publishSnippet,
   confirmPublish,
   copySnippet,
+  downloadSnippet,
 } = useEditor();
 const route = useRoute();
 const { data: snippet } = await useFetch(`/api/codebin/${route.params.id}`);

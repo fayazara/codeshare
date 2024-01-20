@@ -13,7 +13,7 @@ export const useEditor = () => {
     autoSurround: "languageDefined",
     scrollBeyondLastLine: false,
     fontLigatures: true,
-    fontFamily: "Cascadia Code",
+    fontFamily: "Cascadia Code, Fira Code, monospace",
     minimap: {
       enabled: false,
     },
@@ -89,7 +89,7 @@ export const useEditor = () => {
   const confirmPublish = async () => {
     try {
       loading.value = true;
-      confirmationModal.value = false;
+      
       const data = await $fetch("/api/codebin", {
         method: "POST",
         body: snippet.value,
@@ -104,18 +104,33 @@ export const useEditor = () => {
         icon: "i-heroicons-check-circle",
       });
       copy(`${window.location.origin}/${data.uid}`);
+      confirmationModal.value = false;
       navigateTo(`/${data.uid}`);
     } catch (error) {
+      loading.value = false;
       toast.add({
         title: "Error",
         description: error.message,
         color: "red",
         icon: "i-heroicons-x-circle",
       });
-    } finally {
-      loading.value = false;
     }
   };
+
+  const downloadSnippet = () => {
+    const blob = new Blob([snippet.value.body], {
+      type: "text/plain;charset=utf-8",
+    });
+    saveAs(blob, snippet.value.title || "untitled.txt");
+  }
+
+  function saveAs(blob, fileName) {
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName;
+    link.click();
+    link.remove();
+  }
 
   return {
     MONACO_EDITOR_OPTIONS,
@@ -135,5 +150,6 @@ export const useEditor = () => {
     publishSnippet,
     confirmPublish,
     copySnippet,
+    downloadSnippet
   };
 };

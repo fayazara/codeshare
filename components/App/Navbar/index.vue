@@ -10,13 +10,14 @@
     <UInput
       v-if="publishEnabled"
       v-model="snippet.title"
-      placeholder="file.txt"
+      placeholder="untitled.txt"
       size="2xs"
     />
+    <span v-else class="text-xs">{{ title }}</span>
     <div
       class="border-l divide-x divide-white/10 border-white/10 flex items-center"
     >
-      <UTooltip text="Download file">
+      <UTooltip text="Download file" @click="$emit('download')">
         <button class="border-white/10 h-9 px-3 text-sm hover:bg-gray-950">
           <Icon name="i-lucide-download" class="h-4 w-4" />
         </button>
@@ -45,6 +46,10 @@
 defineProps({
   publishEnabled: {
     type: Boolean,
+    required: true,
+  },
+  title: {
+    type: String,
     required: true,
   },
 });
