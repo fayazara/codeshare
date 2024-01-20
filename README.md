@@ -94,3 +94,8 @@ yarn preview
 # bun
 bun run preview
 ```
+
+
+## What's tracked in the app?
+- Visitor count
+- Snippets created count
