@@ -31,6 +31,20 @@
         class="flex items-center justify-center"
       />
     </UTooltip>
+    <span class="flex-1" />
+    <UTooltip text="Github" :popper="{ placement: 'right' }">
+      <UButton
+        icon="i-lucide-github"
+        square
+        variant="ghost"
+        color="gray"
+        size="lg"
+        target="_blank"
+        to="https://github.com/fayazara/codeshare"
+        external
+        class="flex items-center justify-center"
+      />
+    </UTooltip>
   </aside>
 </template>
 <script setup></script>
