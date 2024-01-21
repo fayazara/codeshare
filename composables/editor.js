@@ -104,7 +104,6 @@ export const useEditor = () => {
         icon: "i-heroicons-check-circle",
       });
       copy(`${window.location.origin}/${data.uid}`);
-      window.umami.track('Created Snippet');
       confirmationModal.value = false;
       navigateTo(`/${data.uid}`);
     } catch (error) {
