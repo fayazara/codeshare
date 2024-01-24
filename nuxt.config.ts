@@ -1,4 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
+import cloudflareKVBindingDriver from "unstorage/drivers/cloudflare-kv-binding";
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
@@ -38,9 +41,9 @@ export default defineNuxtConfig({
         rateLimiter: {
           tokensPerInterval: 5,
           interval: 30000,
-          driver: {
-            name: "lruCache",
-          },
+          driver: cloudflareKVBindingDriver({
+            binding: process.env.KV,
+          }),
           throwError: false,
         },
       },
