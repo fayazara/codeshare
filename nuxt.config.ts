@@ -7,14 +7,15 @@ export default defineNuxtConfig({
     "@nuxtjs/google-fonts",
     "@nuxtjs/fontaine",
     "@vueuse/nuxt",
-    "nuxt-security"
+    "nuxt-security",
   ],
   ui: {
     icons: ["heroicons", "lucide"],
   },
   security: {
     headers: {
-      crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
+      crossOriginEmbedderPolicy:
+        process.env.NODE_ENV === "development" ? "unsafe-none" : "require-corp",
     },
   },
   colorMode: {
@@ -29,6 +30,20 @@ export default defineNuxtConfig({
           async: true,
         },
       ],
+    },
+  },
+  routeRules: {
+    "/api/*": {
+      security: {
+        rateLimiter: {
+          tokensPerInterval: 50,
+          interval: 30000,
+          driver: {
+            name: "lruCache",
+          },
+          throwError: false,
+        },
+      },
     },
   },
   googleFonts: {
