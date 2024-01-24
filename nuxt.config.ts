@@ -1,7 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-import cloudflareKVBindingDriver from "unstorage/drivers/cloudflare-kv-binding";
-
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
@@ -10,7 +8,7 @@ export default defineNuxtConfig({
     "@nuxtjs/google-fonts",
     "@nuxtjs/fontaine",
     "@vueuse/nuxt",
-    "nuxt-security",
+    "nuxt-security"
   ],
   ui: {
     icons: ["heroicons", "lucide"],
@@ -41,9 +39,12 @@ export default defineNuxtConfig({
         rateLimiter: {
           tokensPerInterval: 5,
           interval: 30000,
-          driver: cloudflareKVBindingDriver({
-            binding: process.env.KV,
-          }),
+          driver: {
+            name: "cloudflare-kv-binding",
+            options: {
+              binding: process.env.KV,
+            },
+          },
           throwError: false,
         },
       },

@@ -17,11 +17,13 @@
     "@vueuse/core": "^10.7.2",
     "@vueuse/nuxt": "^10.7.2",
     "drizzle-kit": "^0.20.13",
+    "nitro-cloudflare-dev": "^0.0.7",
     "nuxt": "^3.9.1",
     "nuxt-icon": "^0.6.8",
     "nuxt-security": "^1.0.1",
     "vue": "^3.4.13",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "wrangler": "^3.24.0"
   },
   "dependencies": {
     "@guolao/vue-monaco-editor": "^1.4.1",
