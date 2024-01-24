@@ -36,7 +36,7 @@ export default defineNuxtConfig({
     "/api/*": {
       security: {
         rateLimiter: {
-          tokensPerInterval: 50,
+          tokensPerInterval: 5,
           interval: 30000,
           driver: {
             name: "lruCache",
