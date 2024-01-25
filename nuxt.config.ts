@@ -42,7 +42,7 @@ export default defineNuxtConfig({
           driver: {
             name: "cloudflare-kv-binding",
             options: {
-              binding: process.env.KV,
+              binding: "KV",
             },
           },
           throwError: false,
