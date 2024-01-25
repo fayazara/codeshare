@@ -42,7 +42,7 @@ export default defineNuxtConfig({
           driver: {
             name: "cloudflare-kv-binding",
             options: {
-              binding: "KV",
+              binding: "CODESHARE_RATE_LIMITER",
             },
           },
           throwError: false,
