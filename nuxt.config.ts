@@ -8,19 +8,21 @@ export default defineNuxtConfig({
     "@nuxtjs/google-fonts",
     "@nuxtjs/fontaine",
     "@vueuse/nuxt",
-    "nuxt-security"
+    "nuxt-rate-limit"
   ],
   ui: {
     icons: ["heroicons", "lucide"],
   },
-  security: {
-    headers: {
-      crossOriginEmbedderPolicy:
-        process.env.NODE_ENV === "development" ? "unsafe-none" : "require-corp",
-    },
-  },
   colorMode: {
     preference: "dark",
+  },
+  nuxtRateLimit: {
+    routes: {
+      '/api/*': {
+        maxRequests: 5,
+        intervalSeconds: 60,
+      },
+    },
   },
   app: {
     head: {
@@ -31,23 +33,6 @@ export default defineNuxtConfig({
           async: true,
         },
       ],
-    },
-  },
-  routeRules: {
-    "/api/*": {
-      security: {
-        rateLimiter: {
-          tokensPerInterval: 5,
-          interval: 30000,
-          driver: {
-            name: "cloudflare-kv-binding",
-            options: {
-              binding: "CODESHARE_RATE_LIMITER",
-            },
-          },
-          throwError: false,
-        },
-      },
     },
   },
   googleFonts: {
