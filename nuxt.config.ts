@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     routes: {
       '/api/*': {
         maxRequests: 5,
-        intervalSeconds: 60,
+        intervalSeconds: 120,
       },
     },
   },

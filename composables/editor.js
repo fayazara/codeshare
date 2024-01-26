@@ -108,9 +108,10 @@ export const useEditor = () => {
       navigateTo(`/${data.uid}`);
     } catch (error) {
       loading.value = false;
+      console.log(error.statusMessage)
       toast.add({
         title: "Error",
-        description: error.message,
+        description: error.statusMessage || error.message,
         color: "red",
         icon: "i-heroicons-x-circle",
       });
