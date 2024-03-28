@@ -1,5 +1,6 @@
 import githubTheme from "@/assets/github-dark.json";
 import languages from "@/assets/languages";
+import fileExtensions from "@/assets/file-extensions";
 
 export const useEditor = () => {
   const { copy } = useClipboard();
@@ -22,7 +23,7 @@ export const useEditor = () => {
     },
     inlineSuggest: {
       enabled: true,
-      showToolbar: 'always'
+      showToolbar: "always",
     },
   });
   const snippet = useState("snippet", () => {
@@ -32,12 +33,21 @@ export const useEditor = () => {
       language: "plaintext",
     };
   });
+
   const confirmationModal = ref(false);
   const loading = ref(false);
   const toast = useToast();
   const selectedLanguage = ref("plaintext");
   const lineCount = ref(0);
   const editorRef = shallowRef();
+
+  watchEffect(() => {
+    const language = snippet.value.language;
+    if (fileExtensions[language]) {
+      const originalFilename = snippet.value.title.split('.')[0];
+      snippet.value.title = `${originalFilename}${fileExtensions[language]}`;
+    }
+  });
 
   const handleMount = (editor, monaco) => {
     editorRef.value = editor;
@@ -89,7 +99,7 @@ export const useEditor = () => {
   const confirmPublish = async () => {
     try {
       loading.value = true;
-      
+
       const data = await $fetch("/api/codebin", {
         method: "POST",
         body: snippet.value,
@@ -108,7 +118,7 @@ export const useEditor = () => {
       navigateTo(`/${data.uid}`);
     } catch (error) {
       loading.value = false;
-      console.log(error.statusMessage)
+      console.log(error.statusMessage);
       toast.add({
         title: "Error",
         description: error.statusMessage || error.message,
@@ -123,7 +133,7 @@ export const useEditor = () => {
       type: "text/plain;charset=utf-8",
     });
     saveAs(blob, snippet.value.title || "untitled.txt");
-  }
+  };
 
   function saveAs(blob, fileName) {
     const link = document.createElement("a");
@@ -151,6 +161,6 @@ export const useEditor = () => {
     publishSnippet,
     confirmPublish,
     copySnippet,
-    downloadSnippet
+    downloadSnippet,
   };
 };

@@ -1,9 +1,9 @@
 <template>
   <header
-    class="border-b bg-gray-900 border-white/10 flex items-center justify-between gap-3"
+    class="flex gap-3 justify-between items-center bg-gray-900 border-b border-white/10"
   >
-    <h1 class="font-bold tracking-wide flex items-center gap-2 px-4">
-      <Icon class="h-5 w-5" name="i-lucide-chevron-right-square" /><span
+    <h1 class="flex gap-2 items-center px-4 font-bold tracking-wide">
+      <Icon class="w-5 h-5" name="i-lucide-chevron-right-square" /><span
         >CODESHARE</span
       >
     </h1>
@@ -15,27 +15,27 @@
     />
     <span v-else class="text-xs">{{ title }}</span>
     <div
-      class="border-l divide-x divide-white/10 border-white/10 flex items-center"
+      class="flex items-center border-l divide-x divide-white/10 border-white/10"
     >
       <UTooltip text="Download file" @click="$emit('download')">
-        <button class="border-white/10 h-9 px-3 text-sm hover:bg-gray-950">
-          <Icon name="i-lucide-download" class="h-4 w-4" />
+        <button class="px-3 h-9 text-sm border-white/10 hover:bg-gray-950">
+          <Icon name="i-lucide-download" class="w-4 h-4" />
         </button>
       </UTooltip>
       <UTooltip text="Copy code">
         <button
           @click="$emit('copy')"
-          class="border-white/10 h-9 px-3 text-sm hover:bg-gray-950"
+          class="px-3 h-9 text-sm border-white/10 hover:bg-gray-950"
         >
-          <Icon name="i-lucide-copy" class="h-4 w-4" />
+          <Icon name="i-lucide-copy" class="w-4 h-4" />
         </button>
       </UTooltip>
       <UTooltip v-if="publishEnabled" text="Publish">
         <button
           @click="$emit('publish')"
-          class="border-white/10 h-9 px-3 text-sm hover:bg-gray-950"
+          class="px-3 h-9 text-sm border-white/10 hover:bg-gray-950"
         >
-          <Icon name="i-lucide-external-link" class="h-4 w-4" />
+          <Icon name="i-lucide-external-link" class="w-4 h-4" />
         </button>
       </UTooltip>
     </div>
