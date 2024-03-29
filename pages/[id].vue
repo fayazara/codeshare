@@ -1,5 +1,5 @@
 <template>
-  <main class="h-screen flex flex-col text-white">
+  <main class="flex flex-col h-screen text-white">
     <AppNavbar
       @publish="publishSnippet"
       @copy="copySnippet"
@@ -7,7 +7,7 @@
       :publish-enabled="false"
       :title="snippet.title"
     />
-    <div class="flex-1 flex">
+    <div class="flex flex-1">
       <AppSidebar />
       <ClientOnly>
         <vue-monaco-editor
@@ -20,7 +20,7 @@
           @change="onChange"
         >
           <template #default>
-            <div class="flex items-center justify-center">
+            <div class="flex justify-center items-center">
               <div class="text-gray-500">Loading editor...</div>
             </div>
           </template>
@@ -28,7 +28,7 @@
       </ClientOnly>
     </div>
     <footer
-      class="border-t bg-gray-900 border-white/10 flex items-center justify-between"
+      class="flex justify-between items-center bg-gray-900 border-t border-white/10"
     >
       <div
         class="flex items-center divide-x divide-white/10 text-xs [&>div]:p-2 border-r border-white/10"
@@ -47,7 +47,7 @@
         </div>
       </div>
       <div
-        class="flex items-center divide-x divide-white/10 text-xs border-l border-white/10"
+        class="flex items-center text-xs border-l divide-x divide-white/10 border-white/10"
       >
         <UTooltip
           :text="`Toggle minimap (${
@@ -61,7 +61,7 @@
             @click="toggleMinimap"
             :disabled="!editorRef"
           >
-            <Icon name="i-heroicons-map" class="h-4 w-4" />
+            <Icon name="i-heroicons-map" class="w-4 h-4" />
           </button>
         </UTooltip>
         <UTooltip
@@ -74,7 +74,7 @@
             @click="formatCode"
             :disabled="!editorRef"
           >
-            <Icon name="i-lucide-sparkles" class="h-4 w-4" />
+            <Icon name="i-lucide-sparkles" class="w-4 h-4" />
           </button>
         </UTooltip>
         <USelectMenu
@@ -91,7 +91,7 @@
     <UModal v-model="confirmationModal">
       <div class="p-4 space-y-4">
         <p>Publish code</p>
-        <UFormGroup label="Email">
+        <UFormGroup label="File name">
           <UInput size="lg" placeholder="File name" v-model="snippet.title" />
         </UFormGroup>
         <UAlert
